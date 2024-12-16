@@ -73,21 +73,21 @@ def main() -> None:
     logger.info("Finished")
 
 
-def opti(xval: np.ndarray) -> Tuple[float, np.ndarray, float, np.ndarray]: #Defining the power transmission coefficient and constraints for given model
+def opti(xval: np.ndarray) -> Tuple[float, np.ndarray, float, np.ndarray]: #Defining the power transmission coefficient and constraints for given model (objective function)
     nx = 5
     eeen = np.array([[5,5,5,5,5]]).T
     eeen1 = np.array([[10,10,10,10,10]]).T
     zin = 0.120
     zout = 0.576
-    rmax = 15
-    rmin = 10
+    rmax = 15 #output radius
+    rmin = 10 #input radius
     c1 = 12940848
     ze = c1 * (eeen.T* xval + eeen1.T)
     tau = 2/(ze*zout)
-    f0val = 0
-    df0dx = c1 * eeen
-    fval = (np.dot(eeen1.T, eeen) - c1).item()
-    dfdx = -3 * (eeen1.T * eeen).T
+    f0val = 0 # objective function formulation 
+    df0dx = c1 * eeen #gradient calculation 
+    fval = (np.dot(eeen1.T, eeen) - c1).item() #constraint value 
+    dfdx = -3 * (eeen1.T * eeen).T #constraint gradient 
     return f0val, df0dx, fval, dfdx
 
 
